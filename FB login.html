@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Σύνδεση με Meta</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            text-decoration: none;
+            color: #ffffff;
+            background-color: #1877f2; /* Facebook Blue */
+            border: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .btn:hover {
+            background-color: #166fe5;
+            transform: translateY(-2px);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn svg {
+            margin-right: 8px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+        }
+        p {
+            color: #555;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Σύνδεση με την Εφαρμογή σου</h1>
+        <p>Πατήστε το παρακάτω κουμπί για να συνδεθείτε με τον λογαριασμό σας στο Meta και να εξουσιοδοτήσετε την εφαρμογή.</p>
+        <a id="metaLoginButton" class="btn" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.505 1.492-3.89 3.776-3.89 1.094 0 2.24.195 2.24.195v2.46h-1.262c-1.225 0-1.628.767-1.628 1.563V12h2.77l-.44 2.89h-2.33v6.987C18.343 21.128 22 16.991 22 12z"/>
+            </svg>
+            Σύνδεση με Meta
+        </a>
+    </div>
+
+    <script>
+        // ΒΗΜΑ 1: ΑΝΤΙΚΑΤΑΣΤΗΣΕ ΑΥΤΑ ΤΑ ΠΕΔΙΑ ΜΕ ΤΑ ΔΙΚΑ ΣΟΥ ΣΤΟΙΧΕΙΑ
+        // Το App ID της εφαρμογής σου από το Meta Developers
+        const APP_ID = '653454641119509'; 
+        // Το Webhook URL του n8n σου, ΑΚΡΙΒΩΣ όπως το έχεις δηλώσει στο Meta Developers
+        const REDIRECT_URI = 'https://n8n-edia.onrender.com/webhook/oautfblogin'; 
+        // Τα δικαιώματα (scopes) που ζητάς, διαχωρισμένα με κόμμα, χωρίς κενά
+        const SCOPES = 'pages_show_list,instagram_basic,business_management,instagram_manage_messages,pages_manage_metadata'; 
+
+        const metaLoginButton = document.getElementById('metaLoginButton');
+
+        // ΒΗΜΑ 2: Δημιουργία της OAuth URL
+        // Αυτή είναι η διεύθυνση στην οποία θα στείλουμε τον χρήστη για να δώσει άδεια
+        const oauthUrl = `https://www.facebook.com/v23.0/dialog/oauth?client_id=${APP_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${encodeURIComponent(SCOPES)}&response_type=code`;
+
+        // ΒΗΜΑ 3: Ορισμός του href του κουμπιού
+        // Όταν ο χρήστης πατήσει το κουμπί, θα μεταβεί σε αυτή την URL
+        metaLoginButton.href = oauthUrl;
+
+        // Προαιρετικό: Μπορείς να προσθέσεις ένα console log για να δεις την URL
+        // Άνοιξε τα Developer Tools (F12) στον browser σου και πήγαινε στην καρτέλα Console για να το δεις
+        console.log("OAuth URL:", oauthUrl);
+    </script>
+</body>
+</html>
